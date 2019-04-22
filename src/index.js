@@ -1,68 +1,65 @@
 
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+// import React, { Component } from 'react';
+// import { render } from 'react-dom';
+// import { createStore } from 'redux';
+// import { Provider, connect } from 'react-redux';
+// import App from './App';
+// import reducer from './reducer';
+// import { pressEventAction,  getAppValue} from './actions';
+// import Button from 'antd/lib/button';
+// // import { Router, Route } from 'react-router';
+
+// // 定义一个类型 
+// class MyApp extends Component {
+//     render() {
+//         const { text, inner, myAppOnclick, value, handleClickEvent } = this.props;
+//         return(
+//             <div>
+//                 我是my
+//                 我有自己的button
+//                 <h1>{inner}</h1>
+//                 <h2>{text}</h2>
+//                 {/* <li><Link to="/link">IndexBox</Link></li> */}
+//                 {/* <li><Link to="/about">IndexBox</Link></li> */}
+//                 <button onClick={myAppOnclick}>点击 文字发生改变</button>
+//                 <App text={value} handleClickEvent={handleClickEvent}/>
+//                 {this.props.children}
+//             </div>
+//         )
+//     }
+// }
+
+
+// // 当前组件可被注册 返回的state中的数字
+// function mapStateToProps(state) {
+//     return {
+//         value: state.value,
+//         text: state.text,
+//         inner: state.inner
+//     }
+// }
+// function mapDispatchToProps(dispatch) {
+//     return {
+//         myAppOnclick: () => dispatch(pressEventAction),
+//         handleClickEvent: () => dispatch(getAppValue),
+//     }
+// }
+
+// MyApp = connect(mapStateToProps, mapDispatchToProps)(MyApp);
+
+import React from 'react';
+import { render } from 'react-dom';
 import { createStore } from 'redux';
-import { Provider, connect } from 'react-redux';
-
-
-// 定义一个类型
-class MyApp extends Component {
-    render() {
-        const { text, inner, myAppOnclick } = this.props;
-        return(
-            <div>
-                我是myApp组件
-                我有自己的button
-                <h1>{inner}</h1>
-                <h2>{text}</h2>
-                <button onClick={myAppOnclick}>点击 文字发生改变</button>
-            </div>
-        )
-    }
-}
-
-// 点击事件触发action reducer 返回修改后的state
-
-// action 被放置在reducer 中做处理 action 通过 mapDispatchToProps 相连
-const pressEventAction = {
-    type: 'PRESS_EVENT'
-}
-const initState = {
-    text: '初始值',
-    inner: 'inner 初始值'
-}
-const reducer = (state= initState, action) => {
-    switch(action.type) {
-        case 'PRESS_EVENT':
-            return {
-                text: '我是myApp中的文字',
-                inner: '我是inner from myApp'
-            }
-        default:
-            return initState;
-    }
-}
-
-function mapStateToProps(state) {
-    return {
-        text: state.text,
-        inner: state.inner
-    }
-}
-function mapDispatchToProps(dispatch) {
-    return {
-        myAppOnclick: () => dispatch(pressEventAction),
-    }
-}
+import { Provider } from 'react-redux';
+import App from './components/App';
+import reducer from './reducers';
+import 'todomvc-app-css/index.css'
 
 let store = createStore(reducer)
 
-MyApp = connect(mapStateToProps, mapDispatchToProps)(MyApp);
-
-
-ReactDOM.render(
+render(
     <Provider store={store}>
-        <MyApp />
+        <App />
     </Provider>,
     document.getElementById('root')
 )
